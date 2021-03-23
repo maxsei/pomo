@@ -25,6 +25,11 @@ func maybe(err error) {
 func defaultConfigPath() string {
 	u, err := user.Current()
 	maybe(err)
+
+	altPath := path.Join(u.HomeDir, "/.config/pomo/config.json")
+	if _, err := os.Stat(altPath); err == nil {
+		return altPath
+	}
 	return path.Join(u.HomeDir, "/.pomo/config.json")
 }
 
